@@ -86,10 +86,10 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ service, onBack }) => {
               </div>
 
               <div className="text-center p-8 bg-[#2C2C2C] rounded-2xl text-white">
-                <h4 className="text-lg font-serif mb-4">Dúvidas sobre o roteiro?</h4>
-                <p className="text-xs text-gray-400 mb-6">Consulte nossa assistente IA para sugestões de locais e figurino para {service.title}.</p>
-                <a href="#ai" onClick={onBack} className="inline-block bg-[#A48862] px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all">
-                  Usar Consultoria IA
+                <h4 className="text-lg font-serif mb-4">Pronto para sua sessão?</h4>
+                <p className="text-xs text-gray-400 mb-6">Entre em contato para verificar datas disponíveis para {service.title}.</p>
+                <a href="#contato" onClick={onBack} className="inline-block bg-[#A48862] px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all">
+                  Solicitar Orçamento
                 </a>
               </div>
             </div>
@@ -114,7 +114,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ service, onBack }) => {
       </section>
 
       {/* Reuse Contact for booking */}
-      <Contact />
+      <Contact contact={{ email: "contato@fernandasales.com.br", whatsapp: "5511987654321" }} />
     </div>
   );
 };

@@ -5,7 +5,6 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
 import Portfolio from './components/Portfolio';
-import AIConsultant from './components/AIConsultant';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ServiceDetail from './components/ServiceDetail';
@@ -38,10 +37,17 @@ const App: React.FC = () => {
   const [session, setSession] = useState<any>(null);
 
   useEffect(() => {
-    const path = window.location.pathname;
-    if (path === '/qube-manager') {
-      setActivePage('admin');
-    }
+    const handleLocation = () => {
+      const path = window.location.pathname;
+      if (path === '/qube-manager') {
+        setActivePage('admin');
+      } else {
+        setActivePage('home');
+      }
+    };
+
+    handleLocation();
+    window.addEventListener('popstate', handleLocation);
 
     // Monitorar sessão do Supabase
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -62,6 +68,7 @@ const App: React.FC = () => {
     };
 
     loadContent();
+    return () => window.removeEventListener('popstate', handleLocation);
   }, []);
 
   useEffect(() => {
@@ -73,6 +80,12 @@ const App: React.FC = () => {
   const navigateToService = (service: Service) => {
     setSelectedService(service);
     setActivePage('service');
+    window.scrollTo(0, 0);
+  };
+
+  const handleAdminNavigate = () => {
+    window.history.pushState({}, '', '/qube-manager');
+    setActivePage('admin');
     window.scrollTo(0, 0);
   };
 
@@ -105,7 +118,10 @@ const App: React.FC = () => {
     <div className="relative min-h-screen">
       <Navbar 
         isScrolled={isScrolled} 
-        onLogoClick={() => setActivePage('home')} 
+        onLogoClick={() => {
+          window.history.pushState({}, '', '/');
+          setActivePage('home');
+        }} 
         isInternalPage={activePage !== 'home'} 
       />
       <main>
@@ -115,17 +131,13 @@ const App: React.FC = () => {
             <About />
             <Services services={content.services} onServiceClick={navigateToService} />
             <Portfolio items={content.portfolio} />
-            <AIConsultant />
             <Contact contact={content.contact} />
           </>
         ) : (
           selectedService && <ServiceDetail service={selectedService} onBack={() => setActivePage('home')} />
         )}
       </main>
-      <Footer onAdminClick={() => {
-        window.history.pushState({}, '', '/qube-manager');
-        setActivePage('admin');
-      }} />
+      <Footer onAdminClick={handleAdminNavigate} />
       <FloatingWhatsApp number={content.contact.whatsapp} />
     </div>
   );

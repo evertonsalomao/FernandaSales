@@ -6,7 +6,6 @@ export const NAV_LINKS: NavLink[] = [
   { label: 'História', href: '#sobre' },
   { label: 'Serviços', href: '#servicos' },
   { label: 'Portfólio', href: '#portfolio' },
-  { label: 'Consultoria IA', href: '#ai' },
   { label: 'Contato', href: '#contato' },
 ];
 
@@ -58,7 +57,6 @@ export const SERVICES: Service[] = [
   },
 ];
 
-// Fixed IDs to be strings to match PortfolioItem interface
 export const PORTFOLIO: PortfolioItem[] = [
   { id: '1', category: 'Casamentos', title: 'Casamento no Jockey Club SP', imageUrl: 'https://picsum.photos/seed/p1/800/1000' },
   { id: '2', category: 'Corporativo', title: 'Diretoria Google Brasil', imageUrl: 'https://picsum.photos/seed/p2/800/1000' },
